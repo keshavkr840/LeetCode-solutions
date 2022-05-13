@@ -14,16 +14,12 @@ class Solution{
         //code here
         // if(n<=0) return 0;
         
-        int dp[n+1];
-        dp[0]=0;
+        int dp[n+1]={};
+        
         for(int i=1;i<=n;i++)
-            dp[i]= price[i-1];
-            
-        for(int i=1;i<=n;i++){
-            for(int j=0;j<i;j++){
-                dp[i]= max(dp[i], dp[j]+dp[i-j]);
-            }
-        }
+            for(int j=1;j<=i;j++)
+                    dp[i]=max(dp[i], price[j-1]+dp[i-j]);
+    
         return dp[n];
     }
 };
