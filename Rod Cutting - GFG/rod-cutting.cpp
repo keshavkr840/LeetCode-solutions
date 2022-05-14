@@ -12,15 +12,20 @@ class Solution{
   public:
     int cutRod(int price[], int n) {
         //code here
-        // if(n<=0) return 0;
+        if(n<=0)return 0;
+        int dp[n+1];
+        dp[0]=0;
         
-        int dp[n+1]={};
+        int maxVal = INT_MIN;
         
-        for(int i=1;i<=n;i++)
-            for(int j=1;j<=i;j++)
-                    dp[i]=max(dp[i], price[j-1]+dp[i-j]);
-    
-        return dp[n];
+        for(int i=1;i<=n;i++){
+            for(int j =0;j<i;j++){ 
+                maxVal = max(maxVal, price[j]+dp[i-j-1]);
+            }
+            dp[i]= maxVal;
+        }
+        
+        return maxVal;
     }
 };
 
