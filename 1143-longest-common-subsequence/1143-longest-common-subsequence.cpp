@@ -1,21 +1,19 @@
 class Solution {
 public:
-    int dp[1001][1001];
-    int lcs(string &a, string &b, int m,int n){
-        if(m==0 ||n==0) return 0;
+    int longestCommonSubsequence(string a, string b) {
+        int m = a.length(), n = b.length();
+        int dp[m+1][n+1];
+        memset(dp,0,sizeof(dp));
         
-        if(dp[m][n]!=-1) return dp[m][n];
+        for(int i=1;i<=m;i++){
+            for(int j=1;j<=n;j++){
+                if(a[i-1]==b[j-1])
+                    dp[i][j]= 1+ dp[i-1][j-1];
+                else
+                    dp[i][j] = max(dp[i-1][j], dp[i][j-1]);
+            }
+        }
         
-        if(a[m-1]==b[n-1])
-            return dp[m][n]= 1+ lcs(a,b,m-1,n-1);
-        else
-            return dp[m][n]= max(lcs(a,b,m-1,n),lcs(a,b, m, n-1));
-        
-    }
-    int longestCommonSubsequence(string text1, string text2) {
-        int m = text1.length();
-        int n = text2.length();
-        memset(dp,-1, sizeof(dp));
-        return lcs(text1, text2,m,n);
+        return dp[m][n];
     }
 };
