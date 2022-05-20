@@ -26,7 +26,7 @@ public:
                 }
             }
             
-            if(n==0) break;
+            if(n==0) return true;
             
 //             switch(i){
 //                 case 0 : if(flowerbed[0]==0 && flowerbed[1]==0){
