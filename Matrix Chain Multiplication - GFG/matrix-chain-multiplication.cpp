@@ -20,8 +20,7 @@ public:
         for(int k=i;k<j;k++){
             int tempans = mcm(arr, i,k) + mcm(arr, k+1,j) + arr[i-1]*arr[k]* arr[j];
             
-            if(tempans<mn)
-                mn = tempans;
+            mn = min(mn, tempans);
         }
         return dp[i][j]= mn;
     }
