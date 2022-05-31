@@ -1,25 +1,15 @@
 class Solution {
 public:
-    int jump(vector<int>& v) {
-        int n = v.size()-1;
-        if(n==0) return 0;
-
-        int ladder = v[0];
-        int stair = v[0];
-
-        int jump =1;
-
-        for(int i=1;i<=n;i++){
-            if(i==n) return jump;
-
-            if(i+v[i]> ladder) ladder = i+v[i];
-
-            --stair;
-            if(stair==0){
-                jump++;
-                stair= ladder- i;
+    int jump(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> jump(n,INT_MAX);
+        jump[0]=0;
+        for(int i=0;i<n;i++){
+            for(int j=i+1;j<=i+nums[i];j++){
+                if(j==n) break;
+                jump[j]=min(1+jump[i],jump[j]);
             }
         }
-        return jump;
+        return jump[n-1];
     }
 };
