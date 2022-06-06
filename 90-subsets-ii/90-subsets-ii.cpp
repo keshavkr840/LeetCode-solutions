@@ -1,24 +1,29 @@
 class Solution {
 public:
-    void solve(int i, vector<int> &nums, set<vector<int>> &s, vector<int> &curr){
-        if(i==nums.size()){
-            s.insert(curr);
-            return;
-        }
-        solve(i+1, nums, s, curr);
-        curr.push_back(nums[i]);
-        solve(i+1, nums, s, curr);
-        curr.pop_back();
-    }
+    //bitmasking
     vector<vector<int>> subsetsWithDup(vector<int>& nums) {
-        sort(nums.begin(),nums.end());
-        set<vector<int>> s;
-        vector<int> curr;
-        solve(0, nums, s, curr);
+        int n = nums.size();
+        sort(nums.begin(), nums.end());
+        vector<vector<int>> ans;
         
-        vector<vector<int>> ans; 
-        for(auto v: s){
-           ans.push_back(v);
+        set<string> s;
+        
+        int k = 1<<n;
+        for(int i=0;i<k;i++){
+            vector<int> v;
+            string str;
+            for(int j=0;j<n;j++){
+                
+                if(1 & (i>>j)){
+                    str+=to_string(nums[j]);
+                    v.push_back(nums[j]);
+                }
+            }
+            
+            if(s.find(str)== s.end()){
+                s.insert(str);
+                ans.push_back(v);
+            }
         }
         return ans;
     }
