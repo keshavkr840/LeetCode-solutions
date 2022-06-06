@@ -10,23 +10,19 @@
 class Solution {
 public:
     ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
-        unordered_map<Node*, int> map;
+        bool flagA= false, flagB=0;
+        Node *a = headA, *b= headB;
         
-        Node *a= headA, *b = headB;
-        
-        while(a ||b){
-            if(a){
-                if(map[a]) return a;
-                else map[a]++;
-                a= a->next;
-            }
-            if(b){
-                if(map[b]) return b;
-                else map[b]++;
-                b = b->next;
-            }
+        while(a && b){
+            if(a==b) return a;
+            
+            a= a->next;
+            b= b->next;
+            
+            if(a==nullptr && !flagA){ a= headB; flagA= true;}
+            if(b==nullptr && !flagB){ b= headA; flagB=true;}
+            
         }
-        
         return nullptr;
     }
 };
