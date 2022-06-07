@@ -1,24 +1,18 @@
 class Solution {
 public:
-    void solve(int i, vector<int> &nums, set<vector<int>> &s, vector<int> &curr){
-        if(i==nums.size()){
-            s.insert(curr);
-            return;
+    void solve(int pos,vector<int>& nums,vector<vector<int>>& ans,  vector<int> &v){
+        ans.push_back(v);
+        for(int i=pos;i<nums.size();++i){
+            v.push_back(nums[i]);
+            solve(i+1,nums,ans,v);
+            v.pop_back();
         }
-        solve(i+1, nums, s, curr);
-        curr.push_back(nums[i]);
-        solve(i+1, nums, s, curr);
-        curr.pop_back();
     }
     vector<vector<int>> subsets(vector<int>& nums) {
-        set<vector<int>> s;
-        vector<int> curr;
-        solve(0, nums, s, curr);
-        
-        vector<vector<int>> ans; 
-        for(auto v: s){
-           ans.push_back(v);
-        }
+        sort(nums.begin(),nums.end());
+        vector<vector<int>> ans;
+        vector<int> v;
+        solve(0,nums,ans,v);
         return ans;
     }
 };
