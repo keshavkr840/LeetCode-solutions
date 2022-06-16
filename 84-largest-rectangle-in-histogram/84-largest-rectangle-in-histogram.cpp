@@ -6,20 +6,20 @@ public:
         // left[0]=-1;
         // right[n-1]= n;
         
-        stack<pair<int,int>> st;
+        stack<int> st;
         
         for(int i=0;i<n;i++){
             if(st.empty()) left.push_back(-1);
             
-            else if(st.top().first < heights[i])
-                left.push_back(st.top().second);
+            else if(heights[st.top()] < heights[i])
+                left.push_back(st.top());
             else{
-                while(!st.empty() && st.top().first>= heights[i])
+                while(!st.empty() && heights[st.top()]>= heights[i])
                     st.pop();
                 if(st.empty()) left.push_back(-1);
-                else left.push_back(st.top().second);
+                else left.push_back(st.top());
             }
-            st.push({heights[i],i});
+            st.push(i);
         }
         
         while(!st.empty()) st.pop();
@@ -28,17 +28,17 @@ public:
         for(int i=n-1;i>=0;i--){
             if(st.empty()) right.push_back(n);
             
-            else if( st.top().first< heights[i])
-                right.push_back(st.top().second);
+            else if( heights[st.top()]< heights[i])
+                right.push_back(st.top());
             
             else{
-                while(!st.empty() && st.top().first>= heights[i])
+                while(!st.empty() && heights[st.top()]>= heights[i])
                     st.pop();
                 
                 if(st.empty()) right.push_back(n);
-                else right.push_back(st.top().second);
+                else right.push_back(st.top());
             }
-            st.push({heights[i], i});
+            st.push(i);
         }
         
         reverse(right.begin(),right.end());
