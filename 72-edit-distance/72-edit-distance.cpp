@@ -2,6 +2,7 @@ class Solution {
 public:
     int minDistance(string str1, string str2) {
         int m = str1.length(), n = str2.length();
+        if(m==0|| n==0) return max(m,n);
         vector<vector<int>> dp(m+1, vector<int>(n+1,0));
         
         for(int i=0;i<=m;i++){
