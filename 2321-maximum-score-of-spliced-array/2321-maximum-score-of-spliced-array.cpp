@@ -5,12 +5,12 @@ private:
         int mx = 0,curr=0,sum=0;
         
         for(int i=0;i<n;i++){
-            sum= max(sum+n2[i]-n1[i], n2[i]-n1[i]);
-            // curr= n2[i]- n1[i];
-            // if(curr+sum>0)
-            //     sum+=curr;
-            // else
-            //     sum= curr;
+            // sum= max(sum+n2[i]-n1[i], n2[i]-n1[i]);
+            curr= n2[i]- n1[i];
+            if(curr+sum>curr)
+                sum+=curr;
+            else
+                sum= curr;
             
             mx= max(mx,sum); 
         }
