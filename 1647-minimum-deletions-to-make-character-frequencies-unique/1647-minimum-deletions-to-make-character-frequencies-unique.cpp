@@ -9,18 +9,11 @@ public:
         unordered_map<int,bool> map;
         
         for(auto n: v){
-            if(n==0) continue;
-            if(map.find(n)==map.end())
-                map[n]= true;
-            else
-            {
-                while(map.find(n)!=map.end()){
-                    ++ans;
-                    --n;
-                    // if(n==0) break;
-                }
-                if(n!=0) map[n]= true;
+            while(n && map.find(n)!= map.end()){
+                ++ans;
+                --n;
             }
+            map[n]= true;
         }
         return ans;
     }
