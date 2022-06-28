@@ -1,19 +1,21 @@
 class Solution {
 public:
     int minDeletions(string s) {
-        vector<int> v(26,0);
-        for(auto c: s)
-            v[c-'a']++;
+        vector<int> freq(26,0);
         
-        int ans=0;
-        unordered_map<int,bool> map;
+        for(auto n: s)
+            freq[n-'a']++;
         
-        for(auto n: v){
-            while(n && map.find(n)!= map.end()){
-                ++ans;
-                --n;
+        sort(freq.begin(), freq.end(), greater<int>());
+        
+        int maxAllow= s.size(),ans=0;
+        
+        for(auto &n:freq){
+            if(n> maxAllow){
+                ans+= n - maxAllow;
+                n=maxAllow;
             }
-            map[n]= true;
+            maxAllow= max(0,n-1);
         }
         return ans;
     }
