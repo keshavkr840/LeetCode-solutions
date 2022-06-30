@@ -1,16 +1,28 @@
 class Solution {
 public:
     vector<vector<int>> reconstructQueue(vector<vector<int>>& people) {
-        sort(people.begin(), people.end(),[&](vector<int> &a, vector<int> &b){
-            if(a[0]==b[0]) return a[1]<b[1];
-            else return a[0]>b[0];
-        });
+        int n = people.size();
+        sort(people.begin(),people.end());
+        // ,[&](vector<int>&a, vector<int> &b){
+        //     if(a[0]==b[0]) return 
+        // });
         
-        vector<vector<int>> res;
+        // for(auto v:people)
+        //     cout<<v[0]<<" "<<v[1]<<endl;
         
-        for(auto v: people){
-            res.insert(res.begin()+v[1], v );
+        vector<vector<int>> ans(n, vector<int>(2,-1));
+        
+        for(int i=0;i<n;i++){
+            int second= people[i][1];
+            for(int j=0;j<n;j++){
+                
+                if(ans[j][0]==-1 && second==0){
+                    ans[j]= people[i];
+                    break;
+                }
+                else if(ans[j][0]==-1 || ans[j][0]>= people[i][0]) second--;
+            }
         }
-        return res;
+        return ans;
     }
 };
