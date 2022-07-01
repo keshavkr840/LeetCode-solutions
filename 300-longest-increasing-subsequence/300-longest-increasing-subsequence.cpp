@@ -3,15 +3,33 @@ public:
     int lengthOfLIS(vector<int>& nums) {
         int n = nums.size();
         
-        vector<int> lis(n,1);
-        for(int i=1;i<n;i++){
-            for(int j=0;j<i;j++){
-                if(nums[j]<nums[i] && lis[j]+1 >= lis[i]){
-                    lis[i]= 1+lis[j];
-                }
+        vector<int> res, resIndex;
+        vector<int> path(n);
+        
+        for(int i=0;i<n;i++){
+            if(res.empty() || res.back()<nums[i]){
+                path[i]=(res.empty())?-1: resIndex[resIndex.size()-1];
+                res.push_back(nums[i]);
+                resIndex.push_back(i);
+            }
+            
+            else{
+                int idx= lower_bound(res.begin(),res.end(), nums[i])-res.begin();
+                path[i]=(idx==0)?-1: resIndex[idx-1];
+                res[idx]= nums[i];
+                resIndex[idx]=i;
             }
         }
         
-        return *max_element(lis.begin(),lis.end());
+//         for(int i=0;i<n;i++)
+//             cout<<i<<" "<<path[i]<<endl;
+        
+        vector<int> ans;
+        int k= resIndex[resIndex.size()-1];
+        while(k!=-1){
+            ans.push_back(nums[k]);
+            k = path[k];
+        }
+        return res.size();
     }
 };
