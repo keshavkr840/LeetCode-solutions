@@ -2,20 +2,31 @@ class Solution {
 public:
     int candy(vector<int>& ratings) {
         int n = ratings.size();
-        vector<int> ans(n,1);
         
-        for(int i=1;i<n;i++)
-            if(ratings[i] > ratings[i-1])
-                ans[i]= ans[i-1]+1;
+        //O(N) TC & O(1) SC one pass code
         
-        for(int i=n-2;i>=0;i--)
-            if(ratings[i]> ratings[i+1] && ans[i]<=ans[i+1])
-                ans[i]= ans[i+1]+1;
+        int up=0, down=0, peak=0, ans=1;
         
-        int sum=0;
-        for(auto &n: ans)
-            sum+=n;
+        for(int i=1;i<n;i++){
+            if(ratings[i]> ratings[i-1]){
+                up++;
+                down=0;
+                peak= up;
+                ans+=1+ up;
+            }
+            else if(ratings[i]== ratings[i-1]){
+                peak=up=down=0;
+                ans+=1;
+            }
+            else{
+                up=0;
+                ++down;
+                ans+=down;
+                
+                if(peak<down) ans+=1;
+            }
+        }
         
-        return sum;
+        return ans;
     }
 };
