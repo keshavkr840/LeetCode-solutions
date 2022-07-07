@@ -13,10 +13,10 @@ public:
         int n = a.length();
         for(int i=1;i<n;i++){
             bool noswap= solve(a.substr(0,i), b.substr(0,i)) && solve(a.substr(i), b.substr(i));
-            if(noswap) return true;
+            if(noswap) return map[key]= true;
             
             bool swap= solve(a.substr(0,i),b.substr(n-i)) && solve(a.substr(i), b.substr(0, n-i));
-            if(swap) return true;
+            if(swap) return map[key]= true;
         }
         return map[key]= false;
     }
