@@ -10,12 +10,15 @@ private:
             return;
         }
         
-        sum+=v[i];
-        temp.push_back(v[i]);
-        solve(v,i,temp,sum);
+        if(v[i]<=(req-sum)){
+            sum+=v[i];
+            temp.push_back(v[i]);
+            solve(v,i,temp,sum);
+
+            temp.pop_back();
+            sum-=v[i];
+        }
         
-        temp.pop_back();
-        sum-=v[i];
         
         solve(v,i+1,temp,sum);
     }
