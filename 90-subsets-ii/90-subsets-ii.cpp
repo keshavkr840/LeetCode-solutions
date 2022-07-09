@@ -1,30 +1,24 @@
 class Solution {
-public:
-    //bitmasking
-    vector<vector<int>> subsetsWithDup(vector<int>& nums) {
-        int n = nums.size();
-        sort(nums.begin(), nums.end());
-        vector<vector<int>> ans;
-        
-        set<string> s;
-        
-        int k = 1<<n;
-        for(int i=0;i<k;i++){
-            vector<int> v;
-            string str;
-            for(int j=0;j<n;j++){
-                
-                if(1 & (i>>j)){
-                    str+=to_string(nums[j]);
-                    v.push_back(nums[j]);
-                }
-            }
-            
-            if(s.find(str)== s.end()){
-                s.insert(str);
-                ans.push_back(v);
-            }
+private:
+    vector<vector<int>> ans;
+    void solve(vector<int>& nums, vector<int> & temp, int i){
+        if(i==nums.size()){
+            ans.push_back(temp);
+            return;
         }
+        temp.push_back(nums[i]);
+        solve(nums, temp, i+1);
+        temp.pop_back();
+        while(i+1<nums.size() && nums[i+1]==nums[i]) i++;
+        
+        solve(nums, temp, i+1);
+        return;
+    }
+public:
+    vector<vector<int>> subsetsWithDup(vector<int>& nums) {
+        sort(nums.begin(), nums.end());
+        vector<int> temp;
+        solve(nums,temp,0);
         return ans;
     }
 };
