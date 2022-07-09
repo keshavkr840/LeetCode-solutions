@@ -14,6 +14,8 @@ public:
             while(!pq.empty() && pq.top().second<i-k)
                 pq.pop();
             curr= nums[i]+ pq.top().first;
+            while(!pq.empty() && pq.top().first<curr)
+                pq.pop();
             pq.push({curr,i});
         }
         
