@@ -2,12 +2,13 @@ class Solution {
 private:
     vector<bool> map;
     bool solve(vector<int> &nums,int &target, int k, int idx, int sum){
-        if(k==0) return true;
+        if(k==1) return true;
         
         if(sum==target) return solve(nums,target, k-1,0, 0);
         
-        for(int i=idx;i<nums.size();i++){
-            if(map[i] || nums[i]+sum> target) continue;
+        for(int i=idx;i<nums.size();i++){if(k==1) return true;
+            if(map[i]) continue;
+            if(nums[i]+sum> target) break;
             
             map[i]= true;
             if(solve(nums, target, k, i+1, sum+nums[i])) return true;
@@ -18,6 +19,7 @@ private:
 public:
     bool canPartitionKSubsets(vector<int>& nums, int k) {
         if(k==1) return true;
+        sort(nums.begin(),nums.end());
         
         int sum = accumulate(nums.begin(), nums.end(),0);
         int mx = *max_element(nums.begin(), nums.end());
