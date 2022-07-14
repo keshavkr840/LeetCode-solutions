@@ -1,44 +1,43 @@
 class Solution {
 private:
-    vector<vector<string>> ans;
-    bool fill(vector<string> &temp, int &i, int &j, int &n){
-        int x= i-1, y=j-1;
-        while(x>=0 && y>=0){
-            if(temp[x--][y--]=='Q') return false;
-        }
+    bool canPlace(vector<vector<string>> &ans, vector<string> &temp, vector<bool> &top, vector<bool> & leftDiagonal, vector<bool> & rightDiagonal, int &n, int row, int col){
         
-        x= i-1, y=j;
-        while(x>=0){
-            if(temp[x--][y]=='Q') return false;
-        }
+        if(!top[col] && !leftDiagonal[n-1+(col-row)] && !rightDiagonal[row+col]) return true;
+        else return false;
         
-        x=i-1, y=j+1;
-        while(x>=0 && y<n){
-            if(temp[x--][y++]=='Q') return false;
-        }
-        return true;
     }
     
-    void solve(vector<string> &temp, int &n, int row){
-        if(row==n)
+    
+    void solve(vector<vector<string>> &ans, vector<string> &temp, vector<bool> &top, vector<bool> & leftDiagonal, vector<bool> & rightDiagonal, int &n, int row){
+        if(row==n){
             ans.push_back(temp);
+            return;
+        }
         
-        for(int i=0;i<n;i++){
-            if(fill(temp, row, i, n)){
-                temp[row][i]='Q';
-                solve(temp, n, row+1);
-                temp[row][i]='.';
+        for(int col=0;col<n;col++){
+            if(canPlace(ans, temp, top, leftDiagonal, rightDiagonal, n, row, col)){
+                top[col]= true;
+                leftDiagonal[n-1+ (col-row)]=true;
+                rightDiagonal[row+col]=true;
+                temp[row][col]= 'Q';
+                
+                solve(ans, temp, top, leftDiagonal, rightDiagonal, n, row+1);
+                
+                temp[row][col]='.';
+                top[col]= false;
+                leftDiagonal[n-1+ (col-row)]= false;
+                rightDiagonal[row+col]=false;
             }
         }
-        
     }
-    
 public:
     vector<vector<string>> solveNQueens(int n) {
-        string str="";
-        for(int i=0;i<n;i++) str+=".";
-        vector<string> temp (n,str );
-        solve(temp, n, 0);
+        vector<vector<string>> ans;
+        string str(n, '.');
+        vector<bool> top(n,false), leftDiagonal(2*n-1,false), rightDiagonal(2*n-1,false);
+        vector<string> temp(n,str);
+        
+        solve(ans, temp, top, leftDiagonal, rightDiagonal,n, 0);
         return ans;
     }
 };
