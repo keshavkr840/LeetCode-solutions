@@ -23,9 +23,20 @@ public:
 class Trie {
 private:
     TrieNode * root;
+    
+    void clear (TrieNode* root){
+        for(int i=0;i<26;i++){
+            if(root->getNode(i+'a')!=nullptr) clear(root->getNode(i+'a'));
+        }
+        delete root;
+    }
 public:
     Trie() {
         root = new TrieNode();
+    }
+    
+    ~Trie(){
+        clear(root);
     }
     
     void insert(string word) {
