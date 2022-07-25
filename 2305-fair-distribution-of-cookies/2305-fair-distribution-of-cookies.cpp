@@ -1,26 +1,42 @@
 class Solution {
-private:
-    int ans= INT_MAX;
-    
-    void solve(vector<int> & cookies, int &k, vector<int> &v, int idx){
-        
-        if(idx==cookies.size()) {
-            int tempans= *max_element(v.begin(), v.end());
-            ans= min(ans, tempans);
-            return;
-        }
+public:
+    bool solve(vector<int>& cookies, vector<int> &v, int &k,int &mid, int idx){
+        if(idx==cookies.size()) return true;
         
         for(int i=0;i<k;i++){
-            v[i]+= cookies[idx];
-            solve(cookies, k, v, idx+1);
-            v[i]-=cookies[idx];
+            if(v[i]+cookies[idx]<= mid){
+                v[i]+=cookies[idx];
+                if(solve(cookies, v, k, mid, idx+1)) return true;
+                v[i]-=cookies[idx];
+            }
+            if(v[i]==0) return false;
         }
+        return false;
     }
-public:
     int distributeCookies(vector<int>& cookies, int k) {
-        vector<int> v(k,0);
         
-        solve(cookies, k, v, 0);
+        sort(cookies.begin(), cookies.end());
+        
+        int l= INT_MIN, sum=0;
+        
+        for(auto &n :cookies){
+            sum+=n;
+            l= max(l, n);
+        }
+        vector<int> v(k);
+        int r= sum, ans= sum;
+        
+        while(l<=r){
+            fill(v.begin(), v.end(),0);
+            int mid= (l+r)>>1;
+            if(solve(cookies, v,k, mid,0)){
+                ans= mid;
+                r= mid-1;
+            }
+            else{
+                l= mid+1;
+            }
+        }
         return ans;
     }
 };
