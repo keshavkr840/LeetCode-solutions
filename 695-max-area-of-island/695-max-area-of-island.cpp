@@ -1,27 +1,31 @@
 class Solution {
 private:
-    int solve(vector<vector<int>>& grid, vector<vector<bool>>& seen, int &m, int& n, int i, int j){
-        if( i<0 || i>=m || j<0 || j>=n || seen[i][j] || !grid[i][j]) return 0;
+    int maxArea(vector<vector<int>>& grid, vector<vector<bool>> &vis, int &m, int &n, int row, int col){
+        if(row<0 || col<0 || row>=m || col>=n || vis[row][col] || grid[row][col]==0) return 0;
         
-        seen[i][j]= true;
-        int area = solve(grid, seen, m, n, i-1, j) + solve(grid,seen, m, n, i+1,j) +                                    solve(grid,seen,m, n, i,j-1 ) + solve(grid, seen, m, n, i, j+1);
+        // int currArea=0;
+        // if(grid[row][col]==1) currArea++;
+        vis[row][col] = true;
         
-        return 1+ area;
+        int currArea = maxArea(grid, vis, m, n, row, col-1) + maxArea(grid, vis, m, n, row, col+1) + maxArea(grid, vis, m, n, row-1, col) + maxArea(grid, vis, m, n, row+1, col);
+        
+        return 1+ currArea;
     }
 public:
     int maxAreaOfIsland(vector<vector<int>>& grid) {
         int m = grid.size();
         int n = grid[0].size();
-        vector<vector<bool>> seen(m, vector<bool>(n,false));
         
-        int ans= 0;
-        for(int i=0;i<m;i++){
-            for(int j=0;j<n;j++){
-                if( ! grid[i][j] || seen[i][j]) continue;
-                int currans= solve(grid, seen, m, n,  i,j);
-                ans = max(ans, currans);
+        vector<vector<bool>> vis(m, vector<bool>(n, false));
+        
+        int mx =0;
+        for(int i=0;i<m; i++){
+            for(int j=0;j<n; j++){
+                if(grid[i][j]==1 && !vis[i][j])
+                    mx = max(mx, maxArea(grid, vis, m, n, i, j));
             }
         }
-        return ans;
+        
+        return mx;
     }
 };
