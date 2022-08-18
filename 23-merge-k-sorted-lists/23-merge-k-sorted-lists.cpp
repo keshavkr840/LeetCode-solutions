@@ -38,8 +38,8 @@ public:
             ListNode* curr= pq.top();
             pq.pop();
             
-            ListNode* t = new ListNode(curr->val);
-            node->next = t;
+            // ListNode* t = new ListNode(curr->val);
+            node->next = curr;
             node= node->next;
             
             if(curr->next) pq.push(curr->next);
