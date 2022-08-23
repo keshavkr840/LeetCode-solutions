@@ -1,31 +1,20 @@
-#define pb push_back
 class Solution {
 public:
     int secondsToRemoveOccurrences(string s) {
-        vector<int> zero, one;
-        int n = s.size();
         
-        for(int i=0;i<n;i++){
-            if(s[i]=='0') zero.pb(i);
-            else one.pb(i);
-        }
-        if(!zero.size() || !one.size()) return 0;
+        int cnt=0, n = s.size();
+        bool change = true;
         
-        int sz0= zero.size(), sz1= one.size(), cnt=0;
-        
-        while(zero[0]!= sz1){
-            for(int i=0;i<sz0;i++){
-                
-                if( i + sz1 == zero[i]) break;
-                
-                int pos= upper_bound(one.begin(), one.end(), zero[i])- one.begin();
-                
-                if(one[pos]==zero[i]+1){
-                    one[pos]--;
-                    zero[i]++;
+        while(change){
+            change = false;
+            for(int i=0;i<n-1;i++){
+                if(s[i]=='0' && s[i+1]=='1'){
+                    swap(s[i], s[i+1]);
+                    change = true;
+                    i++;
                 }
             }
-            cnt++;
+            cnt+=change;
         }
         return cnt;
     }
