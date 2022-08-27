@@ -15,8 +15,7 @@ public:
                     mx= max(mx, map[s[i]-j]);
             }
             // cout<<mx<<endl;
-            v[i]=1+mx;
-            map[s[i]]= 1+mx;
+            map[s[i]]= v[i]=1+mx;
         }
         return *max_element(v.begin(), v.end());
     }
