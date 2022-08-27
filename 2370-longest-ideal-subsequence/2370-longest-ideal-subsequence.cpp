@@ -1,22 +1,20 @@
 class Solution {
 public:
     int longestIdealString(string s, int k) {
-        unordered_map<char, int> map;
-        int n = s.size();
-        vector<int> v(n,0);
-        
-        int mx;
-        for(int i=0;i<n;i++){
-            mx=0;
-            for(int j=0;j<=k;j++){
-                if(((s[i]+j)<= 'z') && map.find(s[i]+j)!= map.end() )
-                    mx= max(mx, map[s[i]+j]);
-                if(((s[i]-j)>= 'a') && map.find(s[i]-j)!= map.end() )
-                    mx= max(mx, map[s[i]-j]);
+        vector<int> dp(26,0);
+        int lo, hi;
+        for(auto &ch : s){
+            int i= ch-'a';
+            
+            lo= max(0, i-k);
+            hi= min(25, i+k);
+            
+            int mx=0;
+            for(;lo<=hi;lo++){
+                mx= max(mx, dp[lo]);
             }
-            // cout<<mx<<endl;
-            map[s[i]]= v[i]=1+mx;
+            dp[i]= 1+ mx;
         }
-        return *max_element(v.begin(), v.end());
+        return *max_element(dp.begin(), dp.end());
     }
 };
