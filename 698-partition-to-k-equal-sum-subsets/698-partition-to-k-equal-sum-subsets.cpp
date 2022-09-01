@@ -1,35 +1,32 @@
 class Solution {
-private:
-    vector<bool> map;
-    bool solve(vector<int> &nums,int &target, int k, int idx, int sum){
+public:
+    int check(vector<int>& nums, int idx, vector<int> &used, int currsum, int & target,int k){
         if(k==1) return true;
+        if(currsum== target)
+            return check(nums, 0, used, 0, target, k-1);
         
-        if(sum==target) return solve(nums,target, k-1,0, 0);
-        
-        for(int i=idx;i<nums.size();i++){if(k==1) return true;
-            if(map[i]) continue;
-            if(nums[i]+sum> target) break;
+        for(int i=idx;i<nums.size();i++){
+            if(used[i]) continue;
+            if(used[i] || nums[i]+currsum> target) break;
             
-            map[i]= true;
-            if(solve(nums, target, k, i+1, sum+nums[i])) return true;
-            map[i]= false;
+            used[i]= true;
+            if(check(nums, i+1, used, currsum+nums[i], target, k))
+                return true;
+            used[i]= false;
         }
         return false;
     }
-public:
     bool canPartitionKSubsets(vector<int>& nums, int k) {
-        if(k==1) return true;
-        sort(nums.begin(),nums.end());
-        
-        int sum = accumulate(nums.begin(), nums.end(),0);
+        int sum= accumulate(nums.begin(), nums.end(),0);
         int mx = *max_element(nums.begin(), nums.end());
         
-        if(sum%k!=0 || mx> (sum/k)) return false;
+        if(sum%k!=0 || mx> sum/k) return false;
+        sort(nums.begin(), nums.end());
         
-        map.resize(nums.size(),false);
-        int target= sum/k;
+        int target= sum /k;
+        vector<int> used(size(nums), false);
         
-        bool ans = solve(nums,target,k, 0,0 );
-        return ans;
+        if(check(nums, 0, used, 0, target, k)) return true;
+        return false;
     }
 };
