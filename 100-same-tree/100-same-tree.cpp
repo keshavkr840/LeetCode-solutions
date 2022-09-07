@@ -13,13 +13,10 @@
 class Solution {
 public:
     bool isSame(Node * a, Node* b){
-        if(!a || !b){
-            if(!a && !b) return true;
-            else return false;
-        }
-        if(a->val == b->val  && isSame(a->left, b->left) && isSame(a->right,b->right))
-            return true;
-        else return false;
+        if(!a && !b) return true;
+        if(!a || !b) return false;
+        
+        return (a->val == b->val  && isSame(a->left, b->left) && isSame(a->right,b->right));
     }
     bool isSameTree(TreeNode* p, TreeNode* q) {
         return isSame(p,q);
