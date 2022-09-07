@@ -18,6 +18,7 @@ public:
         vector<vector<int>> ans;
         queue<Node*> q;
         q.push(root);
+        bool flag =0;
         
         while(!q.empty()){
             vector<int> temp;
@@ -33,9 +34,9 @@ public:
                 if(curr->right) q.push(curr->right);
             }
             
-            if(ans.size()%2)
+            if(flag)
                 reverse(temp.begin(), temp.end());
-            
+            flag^=1;
             ans.pb(temp);
         }
         
