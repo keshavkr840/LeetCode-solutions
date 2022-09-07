@@ -12,19 +12,25 @@
 #define Node TreeNode
 class Solution {
 public:
-    pair<int, bool> check(Node* node){
-        if(!node) return (make_pair(0, true));
-        auto [left, leftBal] = check(node->left);
-        auto [right, rightBal] = check(node->right);
-        int res= abs(left-right);
-        if(res<=1 && leftBal && rightBal)
-            return make_pair(1+max(left, right), true);
-        else
-            return make_pair(1+max(left, right), false);
+    int check(Node* node){
+        if(!node) return 0;
+        
+        int left = check(node->left);
+        if(left!=-1){
+            int right= check(node->right);
+            if(right!=-1){
+                if(abs(left-right)<= 1){
+                    return (max(left, right)+1);
+                }
+            }
+            
+        }
+         
+        return -1;
     }
     bool isBalanced(TreeNode* root) {
         auto p= check(root);
-        if(p.second) return true;
+        if(check(root)!=-1) return true;
         else return false;
     }
 };
