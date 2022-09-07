@@ -16,12 +16,12 @@ public:
     int getSum(Node* node){
         if(!node) return 0;
         
-        int left= getSum(node->left);
-        int right= getSum(node->right);
+        int left= max(getSum(node->left),0);
+        int right= max(getSum(node->right),0);
         
-        mx = max({mx, node->val, node->val+left, node->val + right, node->val + left+ right});
+        mx = max(mx, node->val + left+ right);
             
-        return node->val + max((left>0 ? left :0), (right>0? right:0));
+        return node->val + max(left, right);
     }
     
     int maxPathSum(TreeNode* root) {
