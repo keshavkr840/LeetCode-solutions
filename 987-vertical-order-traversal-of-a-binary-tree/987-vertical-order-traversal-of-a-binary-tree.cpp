@@ -21,23 +21,19 @@ public:
         while(!q.empty()){
             
             int n = q.size();
-            unordered_map<int, multiset<int>> temp;
+            multiset<pair<int, int>> temp;
             
             for(int i=0;i<n;i++){
                 auto [col, node]= q.front();
                 q.pop();
                 
-                temp[col].insert(node->val);
+                temp.insert({col, node->val});
                 if(node->left) q.push({col-1, node->left});
                 if(node->right) q.push({col+1, node->right});
             }
             
-            for(auto &it: temp){
-                int col= it.first;
-                for(auto &n: it.second){
-                    map[col].push_back(n);
-                }
-            }
+            for(auto &p:temp)
+                map[p.first].push_back(p.second);
             
         }
         vector<vector<int>> ans;
