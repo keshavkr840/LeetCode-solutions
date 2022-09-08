@@ -26,7 +26,9 @@ public:
             for(int i=0;i<n;i++){
                 auto node= q.front();
                 q.pop();
-                last= node->val;
+                
+                if(i==n-1)
+                    last= node->val;
                 
                 if(node->left)
                     q.push(node->left);
