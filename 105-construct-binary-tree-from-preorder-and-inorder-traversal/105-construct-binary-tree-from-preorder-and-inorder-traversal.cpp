@@ -9,23 +9,28 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
+#define Node TreeNode
 class Solution {
 public:
-    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
-		int n = inorder.size();
-        int Idx = 0;
-        return helper(preorder, inorder, Idx, 0, n-1);
-    }
-    
-    TreeNode* helper(vector<int>& preorder, vector<int>& inorder, int& Idx, int left, int right) {
-        if (left > right) return NULL;
-        int pivot = left;  // find the root from inorder
-        while(inorder[pivot] != preorder[Idx]) pivot++;
+    Node* solve(vector<int>& preorder, vector<int>& inorder, unordered_map<int, int> &map, int start, int end, int &i){
+        if(start> end) return nullptr;
         
-        Idx++;
-        TreeNode* newNode = new TreeNode(inorder[pivot]);
-        newNode->left = helper(preorder, inorder, Idx, left, pivot-1);
-        newNode->right = helper(preorder, inorder, Idx, pivot+1, right);
-        return newNode;
+        Node* curr= new Node(preorder[i]);
+        int pos= map[preorder[i++]];
+        
+        curr->left= solve(preorder, inorder, map, start, pos-1, i);
+        curr->right= solve(preorder, inorder, map, pos+1, end, i);
+        
+        return curr;
+    }
+    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+        unordered_map<int, int> map;
+        int n= inorder.size();
+            
+        for(int i=0;i<n;i++)
+            map[inorder[i]]=i;
+        
+        int i=0;
+        return solve(preorder, inorder, map, 0, n-1, i);
     }
 };
