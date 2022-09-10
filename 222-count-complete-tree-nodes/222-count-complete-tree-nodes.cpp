@@ -14,8 +14,8 @@ public:
     int countNodes(TreeNode* node) {
         if(!node) return 0;
         
-        int left= heightLeft(node->left);
-        int right = heightRight(node->right);
+        int left= heightLeft(node);
+        int right = heightRight(node);
         
         if(left==right)
             return (1<<left)-1;
@@ -23,7 +23,7 @@ public:
             return 1+ countNodes(node->left)+ countNodes(node->right);
     }
     int heightLeft(TreeNode* node){
-        int height=1;
+        int height=0;
         while(node){
             node= node->left;
             height++;
@@ -31,7 +31,7 @@ public:
         return height;
     }
     int heightRight(TreeNode* node){
-        int height=1;
+        int height=0;
         while(node){
             node= node->right;
             height++;
