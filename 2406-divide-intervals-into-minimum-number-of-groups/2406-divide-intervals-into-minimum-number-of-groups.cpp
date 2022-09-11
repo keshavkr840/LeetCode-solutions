@@ -1,17 +1,22 @@
 class Solution {
 public:
     int minGroups(vector<vector<int>>& intervals) {
-        priority_queue<int, vector<int>, greater<int>> pq;
-        sort(intervals.begin(), intervals.end());
+        
+        int mx=0;
+        for(auto &inter: intervals)
+            mx= max(mx, inter[1]);
+        
+        vector<int> v(mx+2,0);
         
         for(auto &inter: intervals){
-            
-            if(pq.size()>0 && pq.top()< inter[0])
-                pq.pop();
-            pq.push(inter[1]);
-            
+            v[inter[0]]++;
+            v[inter[1]+1]--;
         }
-        return pq.size();
+        
+        for(int i=1;i<mx+2;i++)
+            v[i]+=v[i-1];
+        
+        return *max_element(v.begin(), v.end());
         
     }
 };
