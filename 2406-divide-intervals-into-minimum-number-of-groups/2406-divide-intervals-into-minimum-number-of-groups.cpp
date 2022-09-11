@@ -1,25 +1,17 @@
 class Solution {
 public:
-    int minGroups(vector<vector<int>>& val) {
-        multiset<int> set;
-        int n = val.size();
-        sort(val.begin(), val.end());
-        set.insert(val[0][1]);
+    int minGroups(vector<vector<int>>& intervals) {
+        priority_queue<int, vector<int>, greater<int>> pq;
+        sort(intervals.begin(), intervals.end());
         
-        
-        for(int i=1;i<n;i++){
-            auto it= set.lower_bound(val[i][0]);
+        for(auto &inter: intervals){
             
-            if(it== set.end()){
-                set.erase(set.begin());
-            }
+            if(pq.size()>0 && pq.top()< inter[0])
+                pq.pop();
+            pq.push(inter[1]);
             
-            else if(it!= set.begin()){
-                set.erase(--it);
-            }
-            
-            set.insert(val[i][1]);
         }
-        return set.size();
+        return pq.size();
+        
     }
 };
