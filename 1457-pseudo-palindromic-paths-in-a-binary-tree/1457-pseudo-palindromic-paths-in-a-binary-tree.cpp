@@ -11,34 +11,24 @@
  */
 #define Node TreeNode
 class Solution {
-public:
-    void count(vector<int> &map, int &ans){
-        int a=0;
-        for(int i=0;i<10;i++)
-            if(map[i]%2==1)
-                a++;
-        if(a<=1)
-            ans++;
-    }
-    void solve(Node* node, vector<int> &map, int &ans){
+private:
+    int ans=0;
+    void solve(Node * node, int path){
         if(!node)
             return;
         
-        map[node->val]++;
+        path^= (1<<node->val);
         
         if(!node->left && !node->right)
-            count(map, ans);
+            if((path &(path-1))==0)
+                ans++;
         
-        solve(node->left, map, ans);
-        solve(node->right, map, ans);
-        
-        map[node->val]--;
-        
+        solve(node->left, path);
+        solve(node->right, path);
     }
+public:
     int pseudoPalindromicPaths (TreeNode* root) {
-        int ans=0;
-        vector<int> map(10,0);
-        solve(root, map, ans);
+        solve(root, 0);
         return ans;
     }
 };
