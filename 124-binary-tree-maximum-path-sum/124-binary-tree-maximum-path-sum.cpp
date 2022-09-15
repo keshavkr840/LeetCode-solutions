@@ -11,21 +11,21 @@
  */
 #define Node TreeNode
 class Solution {
-public:
+private:
     int mx=INT_MIN;
-    int getSum(Node* node){
+    int maxSum(Node* node){
         if(!node) return 0;
         
-        int left= max(getSum(node->left),0);
-        int right= max(getSum(node->right),0);
+        int left= max(maxSum(node->left),0);
+        int right= max(maxSum(node->right),0);
         
-        mx = max(mx, node->val + left+ right);
-            
-        return node->val + max(left, right);
+        mx= max(mx, node->val+ left+ right);
+        return node->val+ max(left, right);
     }
+public:
     
     int maxPathSum(TreeNode* root) {
-        getSum(root);
+        maxSum(root);
         return mx;
     }
 };
