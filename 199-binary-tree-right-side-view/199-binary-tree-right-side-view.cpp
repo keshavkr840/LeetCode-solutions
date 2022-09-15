@@ -12,18 +12,30 @@
 #define Node TreeNode
 class Solution {
 public:
-    void solve(TreeNode* node, int level, vector<int> &ans){
-        if(ans.size()==level)
-            ans.push_back(node->val);
-        
-        if(node->right)
-            solve(node->right, level+1, ans);
-        if(node->left)
-            solve(node->left, level+1, ans);
-    }
     vector<int> rightSideView(TreeNode* root) {
         vector<int> ans;
-        if(root) solve(root, 0, ans);
+        if(!root) return ans;
+        
+        queue<Node*> q;
+        q.push(root);
+        
+        while(!q.empty()){
+            
+            ans.push_back(q.back()->val);
+            int n = q.size();
+            
+            for(int i=0;i<n;i++){
+                auto node= q.front();
+                q.pop();
+                
+                if(node->left)
+                    q.push(node->left);
+                if(node->right)
+                    q.push(node->right);
+            }
+            
+            
+        }
         return ans;
     }
 };
