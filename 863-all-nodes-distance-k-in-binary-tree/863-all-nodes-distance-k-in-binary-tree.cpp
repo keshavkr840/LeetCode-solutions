@@ -42,20 +42,23 @@ public:
         while(!qu.empty()){
             auto [node, dis]= qu.front();
             qu.pop();
-            if(vis.find(node->val)!= vis.end())
-                continue;
+            // if(vis.find(node->val)!= vis.end())
+            //     continue;
             vis.insert(node->val);
             
-            if(dis==k)
+            if(dis==k){
                 ans.push_back(node->val);
+                continue;
+            }
+                
             
-            if(node->left && dis<k){
+            if(node->left && vis.find(node->left->val)==vis.end()){
                 qu.push({node->left,dis+1});
             }
-            if(node->right && dis<k){
+            if(node->right && vis.find(node->right->val)==vis.end()){
                 qu.push({node->right, dis+1});
             }
-            if(parent[node] && dis<k){
+            if(parent[node] && vis.find(parent[node]->val)==vis.end()){
                 qu.push({parent[node], dis+1});
             }
         }
