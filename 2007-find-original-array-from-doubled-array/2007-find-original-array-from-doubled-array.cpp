@@ -6,7 +6,7 @@ public:
         
         sort(changed.begin(), changed.end());
         
-        multiset<int> map;
+        unordered_multiset<int>map;
         vector<int> ans;
         
         for(auto &e: changed){
@@ -20,9 +20,6 @@ public:
             }
             map.insert(e);
         }
-        
-        for(auto &e: ans)
-            cout<<e<<", ";
         
         if(map.size()) return {};
         else return ans;
