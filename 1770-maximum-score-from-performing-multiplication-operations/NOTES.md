@@ -1,1 +1,1 @@
-​
+the value of n is in range (1, 10^5) n, but the dp is of 1001 as, i can go max upto 1000 only, so max value of n is also 1001
