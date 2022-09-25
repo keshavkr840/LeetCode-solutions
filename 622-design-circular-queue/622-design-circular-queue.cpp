@@ -1,69 +1,45 @@
 class MyCircularQueue {
 public:
     vector<int> q;
-    int front=0, rear=-1;
-    bool empty= true;
-    int k =0;
+    int size=0;
+    int front=0;
+    int k=0;
     
     MyCircularQueue(int k) {
-        this->k = k;
-        q.resize(k,-1);
+        this->k=k;
+        q.resize(k);
     }
     
     bool enQueue(int value) {
-        if(empty){
-            rear= (rear+1)%k;
-            q[rear]= value;
-            empty = false;
-            
-            return true;
-        }
-        else{
-            if((rear+1)%k ==front)
-                return false;
-            else{
-                rear= (rear+1)%k;
-                q[rear]= value;
-                
-                return true;                
-            }
-        }
+        if(isFull()) return false;
+        q[(front+size)%k]= value;
+        size++;
+        return true;
     }
     
     bool deQueue() {
-        if(empty) return false;
-        if(rear==front)
-            empty = true;
-        q[front]= -1;
+        if(isEmpty()) return false;
         front= (front+1)%k;
+        size--;
         return true;
     }
     
     int Front() {
-        if(empty) return -1;
-        else
-            return q[front];
+        if(isEmpty()) return -1;
+        return q[front];
     }
     
     int Rear() {
-        if(empty) return -1;
-        else
-            return q[rear];
+        if(isEmpty()) return -1;
+        return q[(front+size-1)%k];
     }
     
     bool isEmpty() {
-        if(empty) return true;
-        return false;
+        return (size==0)? true: false;
     }
     
     bool isFull() {
-        if(empty)
-            return false;
-        else{
-            if((1+ rear)%k== front)
-                return true;
-            return false;
-        }
+        return (size==k)? true: false;
     }
 };
 
