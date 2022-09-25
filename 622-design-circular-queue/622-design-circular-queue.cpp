@@ -11,16 +11,10 @@ public:
     }
     
     bool enQueue(int value) {
-        // cout<<"enque :  ";
         if(empty){
             rear= (rear+1)%k;
             q[rear]= value;
             empty = false;
-            
-        // cout<<"enque :  ";
-        // for(auto &n : q)
-        //     cout<<n<<", ";
-        // cout<<endl;
             
             return true;
         }
@@ -31,29 +25,17 @@ public:
                 rear= (rear+1)%k;
                 q[rear]= value;
                 
-        // cout<<"enque :  ";
-        // for(auto &n : q)
-        //     cout<<n<<", ";
-        // cout<<endl;
-                
                 return true;                
             }
         }
     }
     
     bool deQueue() {
-        // cout<<"deque :  ";
         if(empty) return false;
         if(rear==front)
             empty = true;
         q[front]= -1;
         front= (front+1)%k;
-        
-        
-        // for(auto &n : q)
-        //     cout<<n<<", ";
-        // cout<<endl;
-        
         return true;
     }
     
