@@ -1,38 +1,38 @@
 class Solution {
 public:
-    int minimizeXor(int a, int b) {
-        int n1= __builtin_popcount(a);
-        int n2= __builtin_popcount(b);
+    int minimizeXor(int num1, int num2) {
+        int a = __builtin_popcount(num1);
+        int b = __builtin_popcount(num2);
         
-        if(n1==n2) return a;
+        if(a==b) return num1;
         
-        if(n2> n1){
-            int ans= a;
-            int bits=n2-n1;
+        if(a>b){
+            int ans= num1;
+            int bits= a-b;
             
-            for(int i=0;i<32;i++){
+            for(int i=0;i<32; i++){
                 if(bits==0) return ans;
                 
-                if((ans & (1<<i)) ==0){
-                    ans= ans|(1<<i);
+                if(ans &(1<<i)){
+                    ans= ans^(1<<i);
                     bits--;
                 }
             }
         }
         
-        if(n1>n2){
-            int ans=0;
-            int bits= n2;
-            for(int i=31; i>=0;i--){
+        else{
+            int ans= num1;
+            int bits= b-a;
+            
+            for(int i=0;i<32; i++){
                 if(bits==0) return ans;
                 
-                if(a &(1<<i)){
+                if((ans &(1<<i))==0){
                     ans= ans| (1<<i);
                     bits--;
                 }
             }
         }
-        
         return -1;
     }
 };
