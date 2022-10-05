@@ -37,19 +37,20 @@ public:
             curr++;
         }
         
+        Node *node1, *node2;
         int n =q.size();
         for(int i=0;i<n;i++){
             auto node= q.front();
             q.pop();
             
-            Node* node1= new Node(val);
-            Node* node2= new Node(val);
+            node1= node->left;
+            node2 = node->right;
             
-            node1->left= node->left;
-            node2->right= node->right;
+            node->left= new Node(val);
+            node->right= new Node(val);
             
-            node->left= node1;
-            node->right= node2;
+            node->left->left= node1;
+            node->right->right= node2;
             
         }
         
