@@ -14,17 +14,16 @@ public:
                 }
                 if(nums[i]+ nums[l]+ nums[r]== target)
                     return target;
+                
                 else if(nums[i]+ nums[l]+ nums[r]> target)
                     r--;
                 else
                     l++;
                 
-                if(l<r && nums[l]== nums[l+1])
-                    while(l<r && nums[l]==nums[l+1])
+                while(l<r && nums[l]==nums[l+1])
                         ++l;
                 
-                if(l<r && nums[r]==nums[r-1])
-                    while(l<r && nums[r]==nums[r-1])
+                while(l<r && nums[r]==nums[r-1])
                         --r;
             }
         }
