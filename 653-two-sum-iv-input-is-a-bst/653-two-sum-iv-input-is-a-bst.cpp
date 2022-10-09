@@ -18,8 +18,6 @@ public:
         q.push(root);
         Node* node;
         while(!q.empty()){
-            int n = q.size();
-            for(int i=0;i<n;i++){
                 node= q.front();
                 q.pop();
                 
@@ -31,7 +29,7 @@ public:
                     q.push(node->left);
                 if(node->right)
                     q.push(node->right);
-            }
+            
         }
         return false;
     }
