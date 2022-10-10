@@ -14,11 +14,13 @@ public:
         
         stack<char> st;
         string ans="";
+        char nxt;
         
         for(auto &c:s){
             st.push(c);
             cnt[c-'a']--;
-            while(!st.empty()&& st.top()<= getNext(cnt)){
+            nxt= getNext(cnt);
+            while(!st.empty()&& st.top()<= nxt){
                 ans+= st.top();
                 st.pop();
             }
