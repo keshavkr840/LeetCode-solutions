@@ -1,24 +1,17 @@
 class Solution {
-public:
-    bool increasingTriplet(vector<int>& nums) {
-        int n = nums.size();
-        vector<long> left(n,0), right(n,0);
+    public boolean increasingTriplet(int[] nums) {
+        int c1= Integer.MAX_VALUE, c2= Integer.MAX_VALUE;
+        int n = nums.length;
         
-        long mn = INT_MAX+1L;
-        for(int i=0;i<n;i++){
-            left[i]=mn;
-            if(nums[i]<mn)
-                mn = nums[i];
-        }
-        
-        long mx= INT_MIN-1L;
-        for(int i=n-1;i>=0;i--){
-            right[i]=mx;
-            if(nums[i]> mx)
-                mx= nums[i];
-            if(left[i]< nums[i] && nums[i]< right[i])
+        for(int i=0;i<n ;i++){
+            if(nums[i]<= c1)
+                c1= nums[i];
+            else if(nums[i]<=c2)
+                c2= nums[i];
+            else
                 return true;
         }
+        
         return false;
     }
-};
+}
