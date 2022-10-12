@@ -2,21 +2,36 @@ class Solution {
 public:
     int minDeletions(string s) {
         vector<int> freq(26,0);
+        for(auto &c:s)
+            freq[c-'a']++;
         
-        for(auto n: s)
-            freq[n-'a']++;
+        // for(auto&n: freq)
+        //     cout<<n<<" ";
+        // cout<<endl;
         
-        sort(freq.begin(), freq.end(), greater<int>());
+        sort(freq.begin(), freq.end());
+        int begin = upper_bound(freq.begin(), freq.end(), 0)- freq.begin();
         
-        int maxAllow= s.size(),ans=0;
+        // for(auto&n: freq)
+        //     cout<<n<<" ";
+        // cout<<endl;
+        int ans=0, mx=INT_MAX,del=0;
         
-        for(auto &n:freq){
-            if(n> maxAllow){
-                ans+= n - maxAllow;
-                n=maxAllow;
+        for(int i=25;i>=begin;i--){
+            if(mx==0){
+                for(;i>=begin; i--)
+                    ans+=freq[i];
+                break;
             }
-            maxAllow= max(0,n-1);
+            else if(freq[i]<=mx)
+                mx= freq[i]-1;
+            else{
+                del = freq[i]-mx;
+                mx= freq[i]-del-1;
+                ans+=del;
+            }
         }
         return ans;
+        
     }
 };
